@@ -54,7 +54,7 @@ object Discount extends App {
     case (x :: Nil, y :: Nil) => acc + matrix{x}{y}
     case (x :: Nil, ys)       => acc + getMax(ys.map(y => matrix{x}{y}), 0.0)
     case (xs, y :: Nil)       => acc + getMax(xs.map(x => matrix{x}{y}), 0.0)
-    case (xs, ys)             =>
+    case (x :: xs, ys)        => getMax(ys.map(y => maxSumTailRec(matrix, acc + matrix{x}{y}, xs, ys.filter(j => j != y))), 0.0)
   }
 
   def getMax(list: List[Double], max: Double): Double = list match {
