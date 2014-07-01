@@ -1,17 +1,17 @@
 package codeeval.hard
 
 /**
- * Created by abhinav on 30/6/14.
+ * Created by abhinav on 1/7/14.
  */
-object DiscountOffers extends App {
+object Discount extends App {
 
   // val source = scala.io.Source.fromFile(args(0))
   // val lines = source.getLines.filter(_.length > 0)
   // for (l <- lines) {
-    val arr = "Jack Abraham,John Evans,Ted Dziuba;iPad 2 - 4-pack,Girl Scouts Thin Mints,Nerf Crossbow".split(";")
-    val products = arr{1}.split(",")
-    val names = arr{0}.split(",")
-    println(maxScore(products, names))
+  val arr = "Jack Abraham,John Evans,Ted Dziuba;iPad 2 - 4-pack,Girl Scouts Thin Mints,Nerf Crossbow".split(";")
+  val products = arr{1}.split(",")
+  val names = arr{0}.split(",")
+  println(maxScore(products, names))
   // }
 
   def maxScore(products: Array[String], names: Array[String]): Double = {
@@ -34,37 +34,27 @@ object DiscountOffers extends App {
     matrix
   }
 
-  // greedy algorithm, get the max from the matrix and use it for ss score
   def maxSum(matrix: Array[Array[Double]], acc: List[Double]): List[Double] = {
-    val max = getMatrixMax(matrix)
-    if (max._1 == 0.0) acc
+    if (matrix{0}.length == 1 && matrix.length == 1) acc ::: List(matrix{0}{0})
+    else if (matrix{0}.length == 1) acc ::: List(getMax((for { i <- 0 until matrix.length } yield matrix{i}{0}).toList, 0.0))
+    else if (matrix.length == 1) acc ::: List(getMax((for { j <- 0 until matrix{0}.length } yield matrix{0}{j}).toList, 0.0))
     else {
-      for {
-        i <- 0 until matrix.length
+      val list = (for {
         j <- 0 until matrix{0}.length
-        if (i == max._2 || j == max._3)
       } yield {
-        matrix{i}{j} = 0.0
-      }
-      maxSum(matrix, acc ::: List(max._1))
+
+        val slicedMatrix = matrix.zipWithIndex.filter{ case (x, i) => i > 0 }.map{ case (x, i) => x.zipWithIndex.filter{ case (y, k) => k != j}.map{ case (y, k) => y} }
+        maxSum(slicedMatrix, acc ::: List(matrix{0}{j}))
+      }).toList
+      list.sortBy(l => l.foldLeft(0.0)((a, b) => a + b)).last
     }
   }
 
-  def getMatrixMax(matrix: Array[Array[Double]]): (Double, Int, Int) = {
-    var max = 0.0
-    var a = 0
-    var b = 0
-    for {
-      i <- 0 until matrix.length
-      j <- 0 until matrix{0}.length
-    } yield {
-      if (matrix{i}{j} > max) {
-        max = matrix{i}{j}
-        a = i
-        b = j
-      }
-    }
-    (max, a, b)
+  def maxSumTailRec(matrix: Array[Array[Double]], acc: Double, iList: List[Int], jList: List[Int]): Double = (iList, jList) match {
+    case (x :: Nil, y :: Nil) => acc + matrix{x}{y}
+    case (x :: Nil, ys)       => acc + getMax(ys.map(y => matrix{x}{y}), 0.0)
+    case (xs, y :: Nil)       => acc + getMax(xs.map(x => matrix{x}{y}), 0.0)
+    case (xs, ys)             =>
   }
 
   def getMax(list: List[Double], max: Double): Double = list match {
