@@ -1,2 +1,2 @@
-91.toChar
+"1001".split("1001").toList
 
