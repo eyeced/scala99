@@ -8,7 +8,7 @@ object DiscountOffers extends App {
   // val source = scala.io.Source.fromFile(args(0))
   // val lines = source.getLines.filter(_.length > 0)
   // for (l <- lines) {
-    val arr = "Jack Abraham,John Evans,Ted Dziuba;iPad 2 - 4-pack,Girl Scouts Thin Mints,Nerf Crossbow".split(";")
+    val arr = "Peter Gibbons,Ted Dziuba,Aaron Adelson,Jareau Wade,John Evans,Theodore Donald Kerabatsos,Jeffery Lebowski,Justin Van Winkle,Gabriel Sinkin,Samir Nagheenanajar;Colt M1911A1,16lb Bowling ball,iPad 2 - 4-pack".split(";")
     val products = arr{1}.split(",")
     val names = arr{0}.split(",")
     println(maxScore(products, names))

@@ -36,7 +36,7 @@ object PeakTraffic extends App {
   }
 
   object DepthFirstOrder {
-    val
+    // val
   }
 
 }
