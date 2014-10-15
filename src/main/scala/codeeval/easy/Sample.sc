@@ -1,2 +1,2 @@
-5 / 2
-
+val a = new Array[Int](10)
+a.mkString(" ")

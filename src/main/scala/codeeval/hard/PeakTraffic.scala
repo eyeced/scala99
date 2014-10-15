@@ -1,5 +1,6 @@
 package codeeval.hard
 
+import scala.collection.immutable.HashMap
 import scala.collection.mutable
 
 /**
@@ -33,10 +34,19 @@ object PeakTraffic extends App {
     }
 
     def numOfVertices(): Int = adj.keySet.size
+
+    def reverseDfsPost(): List[A] = {
+      val markedMap = new mutable.HashMap[A, Boolean]()
+      adj.keySet.foreach(a => markedMap.put(a, false))
+      List()
+    }
+
+    def dfs(marked: mutable.HashMap[A, Boolean], list: List[A], acc: List[A]): List[A] = list match {
+      case x :: Nil => acc ::: List(x)
+      case x :: xs  => List()
+    }
   }
 
-  object DepthFirstOrder {
-    // val
-  }
+
 
 }
