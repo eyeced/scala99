@@ -1,2 +1,6 @@
-val a = new Array[Int](10)
-a.mkString(" ")
+import scala.collection.mutable
+
+val s = new mutable.HashSet[Int]()
+s += 3
+s += 4
+s
